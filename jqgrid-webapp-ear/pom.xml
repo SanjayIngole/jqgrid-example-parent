@@ -1,0 +1,135 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.singole.example.jqgrid</groupId>
+		<artifactId>jqgrid-example-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>jqgrid-webapp-ear</artifactId>
+	<packaging>ear</packaging>
+	<name>An Example JQGrid Webapp Ear</name>
+	<description>An Example JQGrid Web Application</description>
+	<properties>
+		<deployable>true</deployable>
+		<deployment.weblogic.adminurl.server1>${weblogic.adminurl.x86.wa1}</deployment.weblogic.adminurl.server1>
+		<deployment.weblogic.targets.server1>${weblogic.targets.x86-wreic}</deployment.weblogic.targets.server1>
+		<deployment.profiles>deployment.default,deployment.weblogic.default,deployment.x86.default,deployment.weblogic.server1</deployment.profiles>
+		<deployment.test.profiles>deployment.default,deployment.x86.default,deployment.test.weblogic.server1</deployment.test.profiles>
+		<deployment.undeploy.profiles>deployment.default,deployment.weblogic.default,deployment.undeploy.weblogic.default,deployment.x86.default,deployment.undeploy.weblogic.server1</deployment.undeploy.profiles>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.singole.example.jqgrid</groupId>
+			<artifactId>jqgrid-webapp</artifactId>
+			<type>war</type>
+			<version>${project.version}</version>		
+		</dependency>
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<exclusions>
+				<!-- jcl-over-slf4j is a drop-in replacement for commons-logging -->
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>		
+		
+		<!-- javax servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+				
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+	
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<!-- version>2.5</version -->
+				<configuration>
+					<applicationName>jqgrid-webapp-ear</applicationName>
+					<description>An Example JQGrid Webapp Ear</description>
+					<defaultLibBundleDir>APP-INF/lib</defaultLibBundleDir>
+					<generateApplicationXml>true</generateApplicationXml>
+					<version>5</version>
+					<artifactTypeMappings>
+						<artifactTypeMapping type="mar" mapping="jar" />
+					</artifactTypeMappings>
+					<modules>						
+						<webModule>
+							<groupId>com.singole.example.jqgrid</groupId>
+							<artifactId>jqgrid-webapp</artifactId>
+							<contextRoot>jqgridexample</contextRoot>
+						</webModule>				
+					</modules>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jboss.tattletale</groupId>
+				<artifactId>tattletale-maven</artifactId>
+				<!-- The version of the plugin you want to use -->
+				<version>1.1.0.Final</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>${basedir}/target</source>
+					<destination>${basedir}/target/tattletale</destination>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

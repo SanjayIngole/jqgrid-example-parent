@@ -1,0 +1,8 @@
+.datatable { 
+	border: 1px solid #4266B3; border-top: 2px solid #4266B3;
+	font-size: 11px; font-family: Arial, Helvetica, sans-serif; 
+	width: 95%; text-align: left; border-collapse:collapse; margin-left: 5px; }
+	
+.datatable2 , .datatable3 { font-size: 11px; font-family: Arial, Helvetica, sans-serif; 
+	text-align: left; border-collapse:collapse; margin:0;
+	width:99%; border:1px solid #A2B4CA; background-color:#FFFFFF; margin-left:5px}
